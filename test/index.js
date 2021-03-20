@@ -26,9 +26,40 @@ describe("convertXMLResponse", function () {
     var forecast = weatherAPI.convertXMLResponse(data);
 
     assert.equal(
-      forecast.length > 0,
+      forecast.length == 107,
       true,
-      "multiple forecast items should be returned in the array"
+      "there should be 107 weather forecsast readings"
     );
+
+    let obj = forecast.find((o) => o.to === "2021-03-20T08:00:00Z");
+
+    assert.equal(obj.rain_mm, "0.0", "verifying rainfall mm result");
+    assert.equal(obj.pressure, "1036.8", "verifying pressure result");
+    assert.equal(obj.cloudiness_percentage, "99.9", "verifying cloudiness");
+    assert.equal(obj.windSpeed_mps, "1.9", "verifying wind speed");
+    assert.equal(obj.weatherSymbol_number, "4", "verifying weather symbol");
+
+    /*           
+            <time datatype="forecast" from="2021-03-20T08:00:00Z" to="2021-03-20T08:00:00Z">
+            <location altitude="9" latitude="54.7211" longitude="-8.7237">
+              <temperature id="TTT" unit="celsius" value="7.6"/>
+              <windDirection id="dd" deg="316.4" name="NW"/>
+              <windSpeed id="ff" mps="1.9" beaufort="2" name="Svak vind"/>
+              <globalRadiation value="12.7" unit="W/m^2"/>
+              <humidity value="98.7" unit="percent"/>
+              <pressure id="pr" unit="hPa" value="1036.8"/>
+              <cloudiness id="NN" percent="99.9"/>
+              <lowClouds id="LOW" percent="99.9"/>
+              <mediumClouds id="MEDIUM" percent="0.0"/>
+              <highClouds id="HIGH" percent="8.9"/>
+              <dewpointTemperature id="TD" unit="celsius" value="7.4"/>
+            </location>
+        </time>
+        <time datatype="forecast" from="2021-03-20T07:00:00Z" to="2021-03-20T08:00:00Z">
+            <location altitude="9" latitude="54.7211" longitude="-8.7237">
+              <precipitation unit="mm" value="0.0" minvalue="0.0" maxvalue="0.0" probability="0.0"/>
+        <symbol id="Cloud" number="4"/>
+            </location>
+        </time> */
   });
 });

@@ -19,7 +19,7 @@ Simple Javascript friendly abstraction layer on top of Met Eireanns XML based we
 TBD...
 
 ```javascript
-var weather = require("weather-ireland-j");
+var weather = require("weather-ireland-js");
 ```
 
 ## Current Weather Data
