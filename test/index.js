@@ -16,12 +16,24 @@ describe("getForecast", function () {
 });
 
 describe("getForecast", function () {
-  it("should return the forecast for bishopstown", async function () {
-    var forecast = await weatherAPI.getForecast(51.878, -8.5326);
+  it("should return the current forecast for bishopstown", async function () {
+    var forecast = await weatherAPI.getForecast(51.878, -8.5326); //bishopstown
+    // var forecast = await weatherAPI.getForecast(54.2766, -8.4761); //sligo
+    //var forecast = await weatherAPI.getForecast(52.3558, -7.6903); //clonmel
 
-    var foo = DateTime.local().toString();
-    console.log(foo);
-    assert.equal(1, 1, "bishopstown weather is correct");
+    var now = DateTime.local();
+
+    let obj = forecast.find(
+      (o) =>
+        DateTime.fromISO(o.to).diff(now, ["hours"]).toObject().hours > 0 &&
+        DateTime.fromISO(o.to).diff(now, ["hours"]).toObject().hours <= 1
+    );
+    console.log("******_____********");
+    console.log("Current weather forecast is...");
+    console.log(obj);
+    console.log("******_____********");
+
+    assert.equal(obj != null, true, "forecast is returned");
   });
 });
 
@@ -31,11 +43,7 @@ describe("convertToDate", function () {
     var date1 = weatherAPI.convertToDate(stringDate);
     var date2 = weatherAPI.convertToDate(stringDate);
 
-    assert.equal(
-      date1.toSeconds() == date2.toSeconds(),
-      true,
-      "dates are same"
-    );
+    assert.equal(date1 == date2, true, "dates are same");
   });
 });
 
@@ -58,7 +66,7 @@ describe("convertXMLResponse", function () {
 
     var targetDate = weatherAPI.convertToDate("2021-03-20T08:00:00Z");
 
-    let obj = forecast.find((o) => o.to.toSeconds() == targetDate.toSeconds());
+    let obj = forecast.find((o) => o.to == targetDate);
 
     assert.equal(obj.rain_mm, "0.0", "verifying rainfall mm result");
     assert.equal(obj.pressure, "1036.8", "verifying pressure result");

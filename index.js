@@ -15,7 +15,7 @@ function convertToDate(stringDate) {
   stringDate = stringDate.replace("Z", ""); // xml format is like this 2021-03-20T08:00:00Z"
   stringDate = stringDate.replace("T", " ");
   var date = DateTime.fromFormat(stringDate, "yyyy-MM-dd HH:mm:ss");
-  return date;
+  return date.toISO();
 }
 
 function convertXMLResponse(xml) {
@@ -60,11 +60,12 @@ function convertXMLResponse(xml) {
         forecast.windDirectionName =
           item.location.windDirection._attributes.name;
         forecast.windDirectionDegree_degrees =
-          item.location.windDirection._attributes.degree;
+          item.location.windDirection._attributes.deg;
       }
 
       if (item.location.windSpeed != null) {
         forecast.windSpeed_mps = item.location.windSpeed._attributes.mps;
+        forecast.windSpeed_kph = (forecast.windSpeed_mps * 18) / 5;
       }
       //Pressure:
       //Pressure is given in units of hPa.
@@ -83,7 +84,7 @@ function convertXMLResponse(xml) {
 
     // merge all readings for same times in to a single result ( rain is seperate to the rest of the data in the XML response )
     rainForecasts.forEach(function (item) {
-      let obj = forecasts.find((o) => o.to.toSeconds() == item.to.toSeconds());
+      let obj = forecasts.find((o) => o.to == item.to);
       if (obj != null) {
         obj.rain_mm = item.rain_mm;
         obj.weatherSymbol_descriptionID = item.weatherSymbol_descriptionID;
@@ -91,7 +92,6 @@ function convertXMLResponse(xml) {
       }
     });
   });
-  console.log(forecasts.length);
   return forecasts;
 }
 
