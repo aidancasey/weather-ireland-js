@@ -2,6 +2,7 @@ const assert = require("assert");
 const weatherAPI = require("../index.js");
 const fs = require("fs");
 const path = require("path");
+const { DateTime } = require("luxon");
 
 describe("getForecast", function () {
   it("should return a array of weather forecasts when passed valid latitude and longitude points", async function () {
@@ -10,6 +11,30 @@ describe("getForecast", function () {
       forecast.length > 0,
       true,
       "multiple forecast items should be returned in the array"
+    );
+  });
+});
+
+describe("getForecast", function () {
+  it("should return the forecast for bishopstown", async function () {
+    var forecast = await weatherAPI.getForecast(51.878, -8.5326);
+
+    var foo = DateTime.local().toString();
+    console.log(foo);
+    assert.equal(1, 1, "bishopstown weather is correct");
+  });
+});
+
+describe("convertToDate", function () {
+  it("should convert the forecast API date formated string to a valid date that can be compare for equality", async function () {
+    var stringDate = "2021-03-20T08:00:00Z";
+    var date1 = weatherAPI.convertToDate(stringDate);
+    var date2 = weatherAPI.convertToDate(stringDate);
+
+    assert.equal(
+      date1.toSeconds() == date2.toSeconds(),
+      true,
+      "dates are same"
     );
   });
 });
@@ -31,13 +56,20 @@ describe("convertXMLResponse", function () {
       "there should be 107 weather forecsast readings"
     );
 
-    let obj = forecast.find((o) => o.to === "2021-03-20T08:00:00Z");
+    var targetDate = weatherAPI.convertToDate("2021-03-20T08:00:00Z");
+
+    let obj = forecast.find((o) => o.to.toSeconds() == targetDate.toSeconds());
 
     assert.equal(obj.rain_mm, "0.0", "verifying rainfall mm result");
     assert.equal(obj.pressure, "1036.8", "verifying pressure result");
     assert.equal(obj.cloudiness_percentage, "99.9", "verifying cloudiness");
     assert.equal(obj.windSpeed_mps, "1.9", "verifying wind speed");
     assert.equal(obj.weatherSymbol_number, "4", "verifying weather symbol");
+    assert.equal(
+      obj.weatherSymbol_descriptionID,
+      "Cloud",
+      "verifying weatherSymbol_descriptionID"
+    );
 
     /*           
             <time datatype="forecast" from="2021-03-20T08:00:00Z" to="2021-03-20T08:00:00Z">

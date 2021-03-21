@@ -1,5 +1,6 @@
 const axios = require("axios").default;
 const convert = require("xml-js");
+const { DateTime } = require("luxon");
 
 function buildAPIRequestURL(lat, long) {
   var url =
@@ -10,14 +11,12 @@ function buildAPIRequestURL(lat, long) {
   return url;
 }
 
-const bookCategory = {
-  0: "Biography",
-  1: "Fiction",
-  2: "History",
-  3: "Mystery",
-  4: "Suspense",
-  5: "Thriller",
-};
+function convertToDate(stringDate) {
+  stringDate = stringDate.replace("Z", ""); // xml format is like this 2021-03-20T08:00:00Z"
+  stringDate = stringDate.replace("T", " ");
+  var date = DateTime.fromFormat(stringDate, "yyyy-MM-dd HH:mm:ss");
+  return date;
+}
 
 function convertXMLResponse(xml) {
   const data = JSON.parse(convert.xml2json(xml, { compact: true, spaces: 2 }));
@@ -27,8 +26,9 @@ function convertXMLResponse(xml) {
     if (item.location.precipitation != null) {
       //precipitation forecast data
       var rainforecast = {};
-      rainforecast.from = item._attributes.from;
-      rainforecast.to = item._attributes.to;
+      rainforecast.from = convertToDate(item._attributes.from);
+      //console.log(rainforecast.from.toLocaleString(DateTime.DATETIME_MED));
+      rainforecast.to = convertToDate(item._attributes.to);
 
       //if there is a max and min value lets  report the max value otherwise report the absolute value
       if (item.location.precipitation._attributes.maxvalue != 0) {
@@ -45,8 +45,8 @@ function convertXMLResponse(xml) {
     } else {
       //non precipitation forecast data
       var forecast = {};
-      forecast.from = item._attributes.from;
-      forecast.to = item._attributes.to;
+      forecast.from = convertToDate(item._attributes.from);
+      forecast.to = convertToDate(item._attributes.to);
 
       //Temperature:
       //The air temperature 2m above the ground is given in degrees Celsius.
@@ -83,7 +83,7 @@ function convertXMLResponse(xml) {
 
     // merge all readings for same times in to a single result ( rain is seperate to the rest of the data in the XML response )
     rainForecasts.forEach(function (item) {
-      let obj = forecasts.find((o) => o.to === item.to);
+      let obj = forecasts.find((o) => o.to.toSeconds() == item.to.toSeconds());
       if (obj != null) {
         obj.rain_mm = item.rain_mm;
         obj.weatherSymbol_descriptionID = item.weatherSymbol_descriptionID;
@@ -115,3 +115,4 @@ async function getForecast(latitude, longitude) {
 }
 module.exports.getForecast = getForecast;
 module.exports.convertXMLResponse = convertXMLResponse;
+module.exports.convertToDate = convertToDate;
