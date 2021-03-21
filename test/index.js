@@ -5,7 +5,7 @@ const path = require("path");
 const { DateTime } = require("luxon");
 
 describe("getForecast", function () {
-  it("should return a array of weather forecasts when passed valid latitude and longitude points", async function () {
+  it("should return an array of weather forecasts when passed valid latitude and longitude points", async function () {
     var forecast = await weatherAPI.getForecast(54.7210798611, -8.7237392806);
     assert.equal(
       forecast.length > 0,
@@ -16,7 +16,7 @@ describe("getForecast", function () {
 });
 
 describe("getForecast", function () {
-  it("should return the current forecast for bishopstown", async function () {
+  it("should return the current forecast for Bishopstown when passed 51.878, -8.5326", async function () {
     var forecast = await weatherAPI.getForecast(51.878, -8.5326); //bishopstown
     // var forecast = await weatherAPI.getForecast(54.2766, -8.4761); //sligo
     //var forecast = await weatherAPI.getForecast(52.3558, -7.6903); //clonmel
@@ -29,7 +29,7 @@ describe("getForecast", function () {
         DateTime.fromISO(o.to).diff(now, ["hours"]).toObject().hours <= 1
     );
     console.log("******_____********");
-    console.log("Current weather forecast is...");
+    console.log("The current weather forecast is...");
     console.log(obj);
     console.log("******_____********");
 
@@ -38,17 +38,17 @@ describe("getForecast", function () {
 });
 
 describe("convertToDate", function () {
-  it("should convert the forecast API date formated string to a valid date that can be compare for equality", async function () {
+  it("should convert the forecast API date string to a valid date that can be compared for equality", async function () {
     var stringDate = "2021-03-20T08:00:00Z";
     var date1 = weatherAPI.convertToDate(stringDate);
     var date2 = weatherAPI.convertToDate(stringDate);
 
-    assert.equal(date1 == date2, true, "dates are same");
+    assert.equal(date1 == date2, true, "dates are equal");
   });
 });
 
 describe("convertXMLResponse", function () {
-  it("should return a array of weather forecasts when passed a valid a sample xml response", async function () {
+  it("should return an array of weather forecasts when passed a sample xml payload", async function () {
     const data = fs.readFileSync(
       path.resolve(__dirname, "../test/sample-response.xml"),
       {
@@ -61,7 +61,7 @@ describe("convertXMLResponse", function () {
     assert.equal(
       forecast.length == 107,
       true,
-      "there should be 107 weather forecsast readings"
+      "there should be 107 weather forecast readings"
     );
 
     var targetDate = weatherAPI.convertToDate("2021-03-20T08:00:00Z");
@@ -78,7 +78,6 @@ describe("convertXMLResponse", function () {
       "Cloud",
       "verifying weatherSymbol_descriptionID"
     );
-
     /*           
             <time datatype="forecast" from="2021-03-20T08:00:00Z" to="2021-03-20T08:00:00Z">
             <location altitude="9" latitude="54.7211" longitude="-8.7237">
