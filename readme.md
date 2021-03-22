@@ -2,7 +2,7 @@
 
 Simple APIs to return weather forecast informaion from around Ireland using Met Eireanns Forecast API https://data.gov.ie/dataset/met-eireann-weather-forecast-api
 
-[![Build Status](https://travis-ci.org/CICCIOSGAMINO/openweather-apis.svg?branch=master)](https://travis-ci.org/CICCIOSGAMINO/openweather-apis)
+[![Build Status](https://travis-ci.com/aidancasey/weather-ireland-js.svg?branch=master)](https://travis-ci.com/aidancasey/weather-ireland-js)
 
 ## Intro
 
