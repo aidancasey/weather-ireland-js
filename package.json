@@ -1,7 +1,7 @@
 {
-  "name": "weather-ireland-js.js",
+  "name": "weather-ireland-js",
   "version": "1.0.0",
-  "description": "A module for obtaining Irish weather forecast information from Met Eireann's Weather Forecast API ",
+  "description": "A module for obtaining irish weather forecast information from Met Eireann's Weather Forecast API ",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
@@ -11,22 +11,22 @@
   "license": "MIT",
   "dependencies": {
     "axios": "0.21.1",
-    "luxon": "^1.26.0",
-    "path": "^0.12.7",
+    "luxon": "1.26.0",
+    "path": "0.12.7",
     "xml-js": "1.6.11"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.18.0",
-    "@typescript-eslint/parser": "^4.18.0",
-    "eslint": "^7.22.0",
-    "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jsx": "^0.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "mocha": "^8.3.2",
-    "prettier": "^2.2.1"
+    "@typescript-eslint/eslint-plugin": "4.18.0",
+    "@typescript-eslint/parser": "4.18.0",
+    "eslint": "7.22.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-prettier": "8.1.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsx": "0.1.0",
+    "eslint-plugin-prettier": "3.3.1",
+    "eslint-plugin-react": "7.22.0",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "mocha": "8.3.2",
+    "prettier": "2.2.1"
   }
 }

@@ -10,7 +10,7 @@ describe("getForecast", function () {
     assert.equal(
       forecast.length > 0,
       true,
-      "multiple forecast items should be returned in the array"
+      "multiple forecast results should be returned in the array"
     );
   });
 });
@@ -23,6 +23,7 @@ describe("getForecast", function () {
 
     var now = DateTime.local();
 
+    //find current forecast
     let obj = forecast.find(
       (o) =>
         DateTime.fromISO(o.to).diff(now, ["hours"]).toObject().hours > 0 &&

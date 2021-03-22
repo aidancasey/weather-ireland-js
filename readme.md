@@ -16,18 +16,42 @@ Simple Javascript friendly abstraction layer on top of Met Eireanns XML based we
 
 ## How to Use
 
-TBD...
-
 ```javascript
-var weather = require("weather-ireland-js");
+const weatherAPI = require("weather-ireland-js");
+
+// call pass a valid latitude and longitude parameter
+var forecasts = await weatherAPI.getForecast(54.7210798611, -8.7237392806);
+forecasts.forEach((weatherForecast) => {
+  console.log(weatherForecast);
+});
 ```
 
 ## Current Weather Data
 
-Using the following requests to API, you can get current weather data for any location in Ireland. Weather data is available in JSON.
+```javascript
+var forecasts = await weatherAPI.getForecast(54.7210798611, -8.7237392806);
+forecasts.forEach((weatherForecast) => {
+  console.log(weatherForecast);
+});
 
-## Error Handling
+//find current forecast
+let obj = forecast.find(
+  (o) =>
+    DateTime.fromISO(o.to).diff(now, ["hours"]).toObject().hours > 0 &&
+    DateTime.fromISO(o.to).diff(now, ["hours"]).toObject().hours <= 1
+);
+console.log("******_____********");
+console.log("The current weather forecast is...");
+console.log(obj);
+console.log("******_____********");
+```
 
 ## Test
 
-The package is tested with mocha and chai. You can find the tests in the /test folder.
+```javascript
+	npm run test
+```
+
+## Usage and Crediting Met Eireann in your app..
+
+TBD

@@ -73,7 +73,9 @@ function convertXMLResponse(xml) {
         forecast.pressure = item.location.pressure._attributes.value;
       }
       //Cloud:
-      //There is a general level of cloudiness called NN, with a maximum of 100. Then there are three types of cloud cover, Low, Medium and High; again they will have a maximum of 100. See here for further details. https://cloudatlas.wmo.int/clouds-definitions.html
+      // There is a general level of cloudiness called NN, with a maximum of 100.
+      // Then there are three types of cloud cover, Low, Medium and High; again they will have a maximum of 100.
+      // See here for further details. https://cloudatlas.wmo.int/clouds-definitions.html
       if (item.location.cloudiness != null) {
         forecast.cloudiness_percentage =
           item.location.cloudiness._attributes.percent;
