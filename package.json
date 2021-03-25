@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A module for obtaining irish weather forecast information from Met Eireann's Weather Forecast API ",
   "main": "index.js",
+  "keywords": ["weather", "forecast", "ireland"],
   "scripts": {
     "test": "mocha",
     "start": "node index.js"
