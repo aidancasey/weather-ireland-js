@@ -1,6 +1,6 @@
 {
   "name": "weather-ireland-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A module for obtaining irish weather forecast information from Met Eireann's Weather Forecast API ",
   "main": "index.js",
   "keywords": ["weather", "forecast", "ireland"],
